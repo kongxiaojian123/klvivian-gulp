@@ -1,5 +1,6 @@
 # klvivian-gulp
 klvivian.com 自动化部署
-## kvgulp
+## 安装kvgulp
 
-- **init** - 初始化kvgulp.
+直接在命令行中执行npm start即可.
+- **install** - 安装.

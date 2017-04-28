@@ -1,0 +1,30 @@
+{
+  "name": "klvivian-gulp",
+  "version": "1.0.0",
+  "description": "klvivian.com自动化部署",
+  "main": "index.js",
+  "bin": {
+    "kvgulp": "index.js"
+  },
+  "scripts": {
+    "start": "tnpm install && tnpm link",
+    "test": "kvgulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kongxiaojian123/klvivian-gulp.git"
+  },
+  "author": "孔德建",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kongxiaojian123/klvivian-gulp/issues"
+  },
+  "homepage": "https://github.com/kongxiaojian123/klvivian-gulp#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "util": "^0.10.3"
+  }
+}
