@@ -37,13 +37,21 @@ Config.prototype = {
                     var pageList=[];
                     for(var i =0;i<files.length;i++){
                         if(files[i].indexOf('.')>=0)continue;
-                        pageList.push({
-                            "name":path==_this.config.paths.config.src?files[i].toUpperCase():files[i],
-                            "url":"./modules/"+files[i]+"/"
-                        });
+                        (function (i) {
+                            fs.readFile(path+'/'+files[i]+'/index.html',function(err,readData){
+                                if(err){}else{
+                                    var str = readData.toString();
+                                    var title = str.match(/<\s*title.*?>(.*?)<\s*\/title\s*>/)||['',''];
+                                    var desc = str.match(/<\s*meta.*?name\s*=\s*["']description["'].*?content\s*=\s*["'](.*?)["']/)||['',''];
+                                    title=title[1];
+                                    desc=desc[1];
+                                    pageList.push({title:title,desc:desc,url:'./modules/'+files[i]+'/'});
+                                    data.data.pageList = pageList;
+                                    fs.writeFile(path+'/'+_this.config.paths.config.name, JSON.stringify(data), function () {});
+                                }
+                            });
+                        })(i);
                     }
-                    data.data.pageList = pageList;
-                    fs.writeFile(path+'/'+_this.config.paths.config.name, JSON.stringify(data), function () {});
                     if(files.toString().search(/css|index|js|imgs/)<0){
                         for(var i =0;i<files.length;i++){
                             if(files[i].search('.')>=0)continue;
