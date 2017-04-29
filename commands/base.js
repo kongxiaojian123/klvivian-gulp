@@ -8,8 +8,10 @@ function Base() {}
 
 Base.prototype = {
     config:require('../config/config'),
+    runSequence:runSequence,
     init: function (commander,cmd) {
         this.cmd = cmd;
+        this.options = [];
         this.parseArgv();
         this.commander = commander.command(this.cmd.name).description(this.cmd.desc);
         this.modulesInit();
@@ -20,15 +22,19 @@ Base.prototype = {
             this.commander.option('-'+this.cmdList[i].name[0]+', --'+this.cmdList[i].name, this.cmdList[i].desc);
         }
     },
+    modulesPreAction:function () {
+
+    },
     modulesAction:function () {
         var _this = this;
         _this.commander.action(function(cmd){
             for(var i = 0;i<_this.options.length;i++){
-                require('../options/'+_this.cmd.name+'_'+_this.options[i]);
+                new (require('../options/'+_this.cmd.name+'_'+_this.options[i]))(gulp,_this.options[i]);
             }
             if(_this.cmdList.length){
                 if(_this.options.length){
-                    runSequence(_this.options);
+                    _this.modulesPreAction(gulp);
+                    runSequence.apply(null,_this.options);
                 }else{
                     _this.commander.help();
                 }
@@ -36,7 +42,6 @@ Base.prototype = {
         });
     },
     parseArgv:function () {
-        this.options = [];
         var argv = process.argv.slice(3);
         var parseArgv = [];
         for(var i=0;i<argv.length;i++){
