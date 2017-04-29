@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "run-sequence": "^1.2.2",
     "util": "^0.10.3"
   }
 }

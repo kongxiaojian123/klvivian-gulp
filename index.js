@@ -5,6 +5,7 @@
 var commander = require('commander');
 var cmdList=[
     {name:'release',desc:'编译项目'},
+    {name:'server',desc:'搭建服务器'},
 ];
 commander.version('0.0.1').usage('<command> [options]');
 //command create
