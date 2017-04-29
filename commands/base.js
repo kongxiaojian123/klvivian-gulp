@@ -38,6 +38,8 @@ Base.prototype = {
                 }else{
                     _this.commander.help();
                 }
+            }else{
+                _this.modulesPreAction(gulp);
             }
         });
     },

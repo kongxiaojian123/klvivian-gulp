@@ -3,6 +3,10 @@
  */
 var cwd = process.cwd();
 var objectCwd=cwd.replace(/kongxiaojian123\.github\.com.*/,'kongxiaojian123.github.com');
+if(cwd.indexOf('kongxiaojian123')<0){
+    //强制设置项目地址
+    objectCwd = '/Users/kongxiaojian/Desktop/git/kongxiaojian123.github.com';
+}
 var config = {
     cwd: cwd,
     objectCwd:objectCwd,

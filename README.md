@@ -6,6 +6,7 @@ klvivian.com 自动化部署
 
 ## kvgulp <commands>
 - **release** - klvivian.com 编译、部署相关。
+- **server** - klvivian.com 本地服务器。
 
 ### release [options]
 - **-b, --build** - 编译项目。
