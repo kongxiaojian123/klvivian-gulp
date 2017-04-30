@@ -11,7 +11,6 @@ var Server=function () {
 util.inherits(Server,Base);
 Server.prototype.modulesPreAction=function (gulp) {
     var _this = this;
-    console.log(_this.config.objectCwd);
     browserSync.init({
         browser: "google chrome",
         files: [_this.config.objectCwd+'/**'],

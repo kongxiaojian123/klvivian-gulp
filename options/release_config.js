@@ -52,9 +52,11 @@ Config.prototype = {
                             });
                         })(i);
                     }
-                    if(files.toString().search(/css|index|js|imgs/)<0){
+                    if(files.join('|').indexOf('.html')<0){
                         for(var i =0;i<files.length;i++){
-                            if(files[i].search('.')>=0)continue;
+                            console.log(files[i]);
+                            if(files[i].indexOf('.')>=0)continue;
+                            console.log(files[i]);
                             map(path+'/'+files[i]);
                         }
                     }
