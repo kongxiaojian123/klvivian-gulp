@@ -43,9 +43,26 @@ Config.prototype = {
                                     var str = readData.toString();
                                     var title = str.match(/<\s*title.*?>(.*?)<\s*\/title\s*>/)||['',''];
                                     var desc = str.match(/<\s*meta.*?name\s*=\s*["']description["'].*?content\s*=\s*["'](.*?)["']/)||['',''];
+                                    var createtime = str.match(/<\s*meta.*?name\s*=\s*["']createtime["'].*?content\s*=\s*["'](.*?)["']/)||['',''];
                                     title=title[1];
                                     desc=desc[1];
-                                    pageList.push({title:title,desc:desc,url:'./modules/'+files[i]+'/'});
+                                    createtime=createtime[1];
+                                    if(!createtime){
+                                        var date=new Date();
+                                        var month = date.getMonth()+1;
+                                        month<10&&(month='0'+month);
+                                        var day = date.getDate();
+                                        day<10&&(day='0'+day);
+                                        createtime = date.getFullYear()+'.'+month+'.'+day;
+                                        str=str.replace('</title>','</title>\n\t<meta name="createtime" content="'+createtime+'">');
+                                        fs.writeFile(path+'/'+files[i]+'/index.html', str, function () {});
+                                    }
+                                    pageList.push({title:title,desc:desc,date:createtime,url:'./modules/'+files[i]+'/'});
+                                    pageList.sort(function (a,b) {
+                                        var _a=new Date(a.date).getTime();
+                                        var _b=new Date(b.date).getTime();
+                                        return _b-_a;
+                                    });
                                     data.data.pageList = pageList;
                                     fs.writeFile(path+'/'+_this.config.paths.config.name, JSON.stringify(data), function () {});
                                 }
@@ -54,9 +71,7 @@ Config.prototype = {
                     }
                     if(files.join('|').indexOf('.html')<0){
                         for(var i =0;i<files.length;i++){
-                            console.log(files[i]);
                             if(files[i].indexOf('.')>=0)continue;
-                            console.log(files[i]);
                             map(path+'/'+files[i]);
                         }
                     }
